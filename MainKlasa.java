@@ -3,6 +3,7 @@ import java.util.List;
 public class MainKlasa {
 
     List<Knjiga> libraryBooks;
+    List<Korisnik> libraryUsers;
 
     public static void main(String[] args) {
 
@@ -100,4 +101,21 @@ public class MainKlasa {
         System.out.println("Book with id of \"" + id + "\" not found!");
     }
 
+    public void AddUser(Korisnik user){
+        libraryUsers.add(user);
+    }
+
+    public void AddUser(String name, String surname, int maxBooks){
+        libraryUsers.add(new Korisnik(name, surname, maxBooks));
+    }
+
+    public void RemoveUserById(long id){
+        for(Korisnik user : libraryUsers){
+            if(user.GetId() == id){
+                libraryUsers.remove(user);
+                return;
+            }
+        }
+        System.out.println("User with id of \"" + id + "\"does not exist");
+    }
 }
