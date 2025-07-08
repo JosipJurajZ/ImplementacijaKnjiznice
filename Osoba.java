@@ -1,47 +1,89 @@
-import java.util.PriorityQueue;
-import java.util.Queue;
+import java.util.List;
 
-public class Osoba {
+public abstract class Osoba {
 
-    private static long idDodjeljivac = 0;
-    private static Queue<Integer> idIzbrisanih = new PriorityQueue<>();
-    private String ime;
-    private String prezime;
-    private long id;
+    private long idTotal = 0;
 
-    protected Osoba(String ime,String prezime){
-        this.ime = ime;
-        this.prezime = prezime;
-        if (idIzbrisanih.isEmpty()) {
-            this.id = idDodjeljivac++;
-        }
-        else {
-            this.id = idIzbrisanih.poll();
-        }
+    private String name;
+    private String surname;
+    private  long id;
+
+    public Osoba(String name, String surname) {
+
+        this.name = name;
+        this.surname = surname;
+
+        this.id = idTotal;
+
+        idTotal++;
     }
 
-    public static Osoba kreirajOsobu(String ime, String prezime, char tipOsobe ){
-        tipOsobe =(char) (tipOsobe | ' ');
-        return switch (tipOsobe){
-            case 'k' -> new Korisnik(ime,prezime,3);
-            case 'z' -> new ZaposlenikBiblioteke(ime,prezime);// dodaj zaposlenika
-            default -> new Osoba(ime,prezime);
-        };
-    }
+    public abstract String ShowDetails();
 
-    protected void dodajURed(Integer id){
-
-        idIzbrisanih.add(id);
-    }
-
-    public long getId() {
+    public long GetId(){
         return id;
     }
 
-    protected String getIme(){
-        return ime;
+    public String GetNameSurnamme(){
+        return name + " " + surname;
     }
-    protected String getPrezime(){
-        return prezime;
+}
+
+class Korisnik extends Osoba{
+
+    private int maxBookAmount;
+    private List<Knjiga> borrowedBooks;
+
+    public Korisnik(String name, String surname, int maxBookAmount){
+
+        super(name,surname);
+
+        this.maxBookAmount = maxBookAmount;
+        borrowedBooks = null;
+    }
+
+    @Override
+    public String ShowDetails(){
+
+        String returnString = super.GetNameSurnamme() + " " + super.GetId() + "\n" + maxBookAmount + "\n" + "Books:\n";
+        if(borrowedBooks.isEmpty()){
+            returnString += "No books borrowed";
+        }
+        else{
+            for(Knjiga book : borrowedBooks){
+                returnString += book.GetTitle() + " " + book.GetAuthor() + " " + book.GetGenre() + " " + book.GetId() + "\n";
+            }
+        }
+
+        return returnString;
+    }
+
+    public void AddBorrowedBook(Knjiga book){
+        if(borrowedBooks.size() < maxBookAmount){
+            borrowedBooks.add(book);
+        }
+        else{
+            // books exceeded
+        }
+    }
+}
+
+class ZaposlenikBiblioteke extends Osoba{
+
+    ZaposlenikBiblioteke(String name, String surname){
+        super(name, surname);
+    }
+
+    public void AddBook(Knjiga book){
+        MainKlasa.AddBook(book);
+    }
+
+    public void RemoveBook(long id){
+        MainKlasa.RemoveBookById(id);
+    }
+
+    @Override
+    public String ShowDetails(){
+        return super.GetNameSurnamme();
     }
 }

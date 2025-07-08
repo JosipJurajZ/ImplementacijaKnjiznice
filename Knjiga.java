@@ -1,64 +1,61 @@
-import java.util.PriorityQueue;
-import java.util.Queue;
-
 public class Knjiga {
 
-    private static long idDodjeljivac = 0;
-    private static Queue<Integer> idIzbrisanih = new PriorityQueue<>();
-    private String author;
-    private String title;
-    private String genre;
+    private static long idTotal = 0;
+
     private long id;
-    private boolean availability;
+    private String title;
+    private String author;
+    private String genre;
+    private boolean isAvailable;
 
+    public Knjiga(String title, String author, String genre){
 
-    public Knjiga(String author, String title, String genre){
-        this.author = author;
         this.title = title;
+        this.author = author;
         this.genre = genre;
-        if (idIzbrisanih.isEmpty()) {
-            this.id = idDodjeljivac++;
-        }
-        else {
-            this.id = idIzbrisanih.poll();
-        }
-        this.availability = true;
+
+        isAvailable = true;
+        id = idTotal;
+        idTotal++;
     }
 
-    public void promjeniDostupnost(){
-        this.availability = !this.availability;
+    public void ChangeAvailability(){
+        this.isAvailable = !isAvailable;
     }
 
-    public void ispisInfo(){
-
-        System.out.println("\nPodaci knjige:\nAutor: " + author + "\nNaslov: " + title + "\nŽanr: " + genre + "\nId: " + id);
+    public void ChangeAvailability(boolean availability){
+        this.isAvailable = availability;
     }
 
-
-    public String getAuthor() {
-        return author;
-    }
-
-    public String getTitle() {
+    public String GetTitle(){
         return title;
     }
 
-    public String getGenre() {
+    public  String GetAuthor(){
+        return author;
+    }
+
+    public String GetGenre(){
         return genre;
     }
 
-    public long getId() {
+    public long GetId(){
         return id;
     }
 
-    public void promjenaPodataka(Knjiga zamjena){
-        this.author = zamjena.getAuthor();
-        this.genre = zamjena.getGenre();
-        this.title = zamjena.getTitle();
-        idDodjeljivac--;
+    public void SetTitle(String title){
+        this.title = title;
     }
 
-    public void dodajURed(Integer id){
-        idIzbrisanih.add(id);
+    public void SetAuthor(String author) {
+        this.author = author;
+    }
+
+    public void SetGenre(String genre) {
+        this.genre = genre;
+    }
+
+    public boolean GetStatus(){
+        return this.isAvailable;
     }
 }
