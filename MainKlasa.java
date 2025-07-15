@@ -2,8 +2,9 @@ import java.util.List;
 
 public class MainKlasa {
 
-    List<Knjiga> libraryBooks;
-    List<Korisnik> libraryUsers;
+    private static List<Knjiga> libraryBooks;
+    private static List<Korisnik> libraryUsers;
+    private static List<ZaposlenikBiblioteke> libraryEmployees;
 
 
 
@@ -180,4 +181,32 @@ public class MainKlasa {
             throw new BookNotAvailableException();
         }
     }
+
+    public static void ReturnBook(Korisnik user, Knjiga book){
+
+        if(user == null){
+            System.out.println("Korisnik ne postoji");
+            return;
+        }
+
+        if(libraryUsers.indexOf(user) < 0){
+            System.out.println("Korisnik nije u sustavu!");
+            return;
+        }
+
+        if(book == null){
+            System.out.println("Knjiga ne postoji!");
+            return;
+        }
+
+        if(libraryBooks.indexOf(book) < 0){
+            System.out.println("Knjiga nije u sustavu!");
+            return;
+        }
+
+        if(user.RemoveBorrowedBook(book)){
+            book.ChangeAvailability(true);
+        }
+    }
+
 }

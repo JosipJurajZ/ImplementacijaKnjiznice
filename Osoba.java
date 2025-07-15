@@ -69,6 +69,16 @@ class Korisnik extends Osoba{
             }
         } catch (ExceededBorrowedBookLimitException e){
             System.out.println("Book limit has been exceeded!");
+        }
+    }
+
+    public boolean RemoveBorrowedBook(Knjiga book){
+        if(borrowedBooks.indexOf(book) < 0){
+            return false;
+        }
+        else{
+            borrowedBooks.remove(book);
+            return true;
 
         }
     }
@@ -92,5 +102,4 @@ class ZaposlenikBiblioteke extends Osoba{
     public String ShowDetails(){
         return super.GetNameSurnamme();
     }
-
 }
