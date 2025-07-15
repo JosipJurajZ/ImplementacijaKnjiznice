@@ -2,9 +2,8 @@ import java.util.List;
 
 public class MainKlasa {
 
-    private static List<Knjiga> libraryBooks;
-    private static List<Korisnik> libraryUsers;
-    private static List<ZaposlenikBiblioteke> libraryEmployees;
+    List<Knjiga> libraryBooks;
+    List<Korisnik> libraryUsers;
 
 
     public static void main(String[] args) {
@@ -21,6 +20,7 @@ public class MainKlasa {
 
     public static List<Knjiga> SearchBookByTitle(String searchInput){
 
+
         List<Knjiga> matchingBooks = null;
 
         for(Knjiga book : libraryBooks){
@@ -34,6 +34,7 @@ public class MainKlasa {
     }
 
     public static List<Knjiga> SearchBookByAuthor(String searchInput){
+
 
         List<Knjiga> matchingBooks = null;
 
@@ -63,6 +64,7 @@ public class MainKlasa {
     }
 
     public static Knjiga ChangeBookTitle(Knjiga book, String title){
+
         if(book == null){
             System.out.println("Error, book cannot be null!");
             return null;
@@ -72,6 +74,7 @@ public class MainKlasa {
     }
 
     public static Knjiga ChangeBookAuthor(Knjiga book, String author){
+
 
         if(book == null){
             System.out.println("Error, book cannot be null!");
@@ -84,6 +87,7 @@ public class MainKlasa {
 
     public static Knjiga ChangeBookGenre(Knjiga book, String genre){
 
+
         if(book == null){
             System.out.println("Error, book cannot be null!");
             return null;
@@ -92,8 +96,9 @@ public class MainKlasa {
         book.SetGenre(genre);
         return book;
     }
-
+  
     public static void RemoveBookById(long id){
+
         for(Knjiga book : libraryBooks){
             if(book.GetId() == id ){
                 libraryBooks.remove(book);
@@ -112,6 +117,7 @@ public class MainKlasa {
     }
 
     public static void RemoveUserById(long id){
+
         for(Korisnik user : libraryUsers){
             if(user.GetId() == id){
                 libraryUsers.remove(user);
@@ -146,6 +152,5 @@ public class MainKlasa {
         System.out.println("Knjiga koja ima id \"" + id +  "\" ne postoji");
         return false;
     }
-
 
 }

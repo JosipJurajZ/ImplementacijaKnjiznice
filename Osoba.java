@@ -4,6 +4,7 @@ public abstract class Osoba {
 
     private long idTotal = 0;
 
+
     private String name;
     private String surname;
     private  long id;
@@ -86,4 +87,5 @@ class ZaposlenikBiblioteke extends Osoba{
     public String ShowDetails(){
         return super.GetNameSurnamme();
     }
+
 }
