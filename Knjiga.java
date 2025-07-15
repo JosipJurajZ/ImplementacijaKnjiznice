@@ -1,6 +1,6 @@
 public class Knjiga {
 
-    private static long idTotal;
+    private static long idTotal = 0;
 
     private long id;
     private String title;
@@ -14,7 +14,8 @@ public class Knjiga {
         this.author = author;
         this.genre = genre;
 
-        isAvailable = false;
+        isAvailable = true;
+
         id = idTotal;
         idTotal++;
     }
@@ -53,5 +54,9 @@ public class Knjiga {
 
     public void SetGenre(String genre) {
         this.genre = genre;
+    }
+
+    public boolean GetStatus(){
+        return this.isAvailable;
     }
 }

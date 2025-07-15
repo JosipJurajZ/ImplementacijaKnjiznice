@@ -5,8 +5,7 @@ public class MainKlasa {
 
     private static LinkedList<Knjiga> libraryBooks;
     private static LinkedList<Osoba> libraryPeople;
-
-
+  
 
     public static void main(String[] args) {
 
@@ -64,6 +63,7 @@ public class MainKlasa {
     }
 
     public static Knjiga ChangeBookTitle(Knjiga book, String title){
+
         if(book == null){
             System.out.println("Error, book cannot be null!");
             return null;
@@ -95,6 +95,7 @@ public class MainKlasa {
     }
 
     public static void RemoveBookById(long id){
+
         for(Knjiga book : libraryBooks){
             if(book.GetId() == id ){
                 libraryBooks.remove(book);
@@ -105,6 +106,7 @@ public class MainKlasa {
     }
 
     public static void AddUser(Korisnik user){
+
         libraryPeople.add(user);
     }
 
@@ -119,13 +121,16 @@ public class MainKlasa {
                     libraryPeople.remove(user);
                     return;
                 }
+
             }
         }
         System.out.println("User with id of \"" + id + "\"does not exist");
     }
 
     public static void AddLibraryEmployee(String name, String surname){
+
         libraryPeople.add(new ZaposlenikBiblioteke(name, surname));
+
     }
 
     public static void RemoveLibraryEmployeeById(long id){
@@ -162,6 +167,7 @@ public class MainKlasa {
         }
 
         if(!libraryPeople.contains(user)){
+
             System.out.println("Korisnik nije u sustavu!");
             return;
         }
@@ -172,6 +178,7 @@ public class MainKlasa {
         }
 
         if(!libraryBooks.contains(book)){
+
             System.out.println("Knjiga nije u sustavu!");
             return;
         }
@@ -193,6 +200,7 @@ public class MainKlasa {
         }
 
         if(!libraryPeople.contains(user)){
+
             System.out.println("Korisnik nije u sustavu!");
             return;
         }
@@ -203,6 +211,7 @@ public class MainKlasa {
         }
 
         if(!libraryBooks.contains(book)){
+
             System.out.println("Knjiga nije u sustavu!");
             return;
         }
