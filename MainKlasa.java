@@ -1,12 +1,11 @@
+import java.util.LinkedList;
 import java.util.List;
 
 public class MainKlasa {
 
-    private static List<Knjiga> libraryBooks;
-    private static List<Korisnik> libraryUsers;
-    private static List<ZaposlenikBiblioteke> libraryEmployees;
-
-
+    private static LinkedList<Knjiga> libraryBooks;
+    private static LinkedList<Osoba> libraryPeople;
+  
 
     public static void main(String[] args) {
 
@@ -107,34 +106,41 @@ public class MainKlasa {
     }
 
     public static void AddUser(Korisnik user){
-        libraryUsers.add(user);
+
+        libraryPeople.add(user);
     }
 
     public static void AddUser(String name, String surname, int maxBooks){
-        libraryUsers.add(new Korisnik(name, surname, maxBooks));
+        libraryPeople.add(new Korisnik(name, surname, maxBooks));
     }
 
     public static void RemoveUserById(long id){
+        for(Osoba user : libraryPeople){
+            if(user.getClass() == Korisnik.class) {
+                if (user.GetId() == id) {
+                    libraryPeople.remove(user);
+                    return;
+                }
 
-        for(Korisnik user : libraryUsers){
-            if(user.GetId() == id){
-                libraryUsers.remove(user);
-                return;
             }
         }
         System.out.println("User with id of \"" + id + "\"does not exist");
     }
 
     public static void AddLibraryEmployee(String name, String surname){
-        libraryEmployees.add(new ZaposlenikBiblioteke(name, surname));
+
+        libraryPeople.add(new ZaposlenikBiblioteke(name, surname));
+
     }
 
     public static void RemoveLibraryEmployeeById(long id){
 
-        for(ZaposlenikBiblioteke employee : libraryEmployees){
-            if(employee.GetId() == id){
-                libraryEmployees.remove(employee);
-                return;
+        for(Osoba employee : libraryPeople){
+            if(employee.getClass() == ZaposlenikBiblioteke.class) {
+                if (employee.GetId() == id) {
+                    libraryPeople.remove(employee);
+                    return;
+                }
             }
         }
 
@@ -151,6 +157,8 @@ public class MainKlasa {
         return false;
     }
 
+    // needs a validation check if the sent user is Korisnik from the sent function
+
     public static void BorrowBook(Korisnik user, Knjiga book) throws BookNotAvailableException {
 
         if(user == null){
@@ -158,7 +166,8 @@ public class MainKlasa {
             return;
         }
 
-        if(libraryUsers.indexOf(user) < 0){
+        if(!libraryPeople.contains(user)){
+
             System.out.println("Korisnik nije u sustavu!");
             return;
         }
@@ -168,7 +177,8 @@ public class MainKlasa {
             return;
         }
 
-        if(libraryBooks.indexOf(book) < 0){
+        if(!libraryBooks.contains(book)){
+
             System.out.println("Knjiga nije u sustavu!");
             return;
         }
@@ -189,7 +199,8 @@ public class MainKlasa {
             return;
         }
 
-        if(libraryUsers.indexOf(user) < 0){
+        if(!libraryPeople.contains(user)){
+
             System.out.println("Korisnik nije u sustavu!");
             return;
         }
@@ -199,7 +210,8 @@ public class MainKlasa {
             return;
         }
 
-        if(libraryBooks.indexOf(book) < 0){
+        if(!libraryBooks.contains(book)){
+
             System.out.println("Knjiga nije u sustavu!");
             return;
         }
@@ -208,5 +220,4 @@ public class MainKlasa {
             book.ChangeAvailability(true);
         }
     }
-
 }
