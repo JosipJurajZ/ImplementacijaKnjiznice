@@ -59,6 +59,7 @@ class Korisnik extends Osoba{
     }
 
     public void AddBorrowedBook(Knjiga book){
+
         try {
             if (borrowedBooks.size() < maxBookAmount) {
                 borrowedBooks.add(book);
@@ -68,6 +69,7 @@ class Korisnik extends Osoba{
             }
         } catch (ExceededBorrowedBookLimitException e){
             System.out.println("Book limit has been exceeded!");
+
         }
     }
 }
@@ -90,4 +92,5 @@ class ZaposlenikBiblioteke extends Osoba{
     public String ShowDetails(){
         return super.GetNameSurnamme();
     }
+
 }

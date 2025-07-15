@@ -15,6 +15,7 @@ public class Knjiga {
         this.genre = genre;
 
         isAvailable = true;
+
         id = idTotal;
         idTotal++;
     }
