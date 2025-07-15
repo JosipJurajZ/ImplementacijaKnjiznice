@@ -2,7 +2,6 @@ public class Knjiga {
 
     private static long idTotal = 0;
 
-
     private long id;
     private String title;
     private String author;
@@ -60,5 +59,4 @@ public class Knjiga {
     public boolean GetStatus(){
         return this.isAvailable;
     }
-
 }

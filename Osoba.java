@@ -4,7 +4,6 @@ public abstract class Osoba {
 
     private long idTotal = 0;
 
-
     private String name;
     private String surname;
     private  long id;
@@ -60,11 +59,17 @@ class Korisnik extends Osoba{
     }
 
     public void AddBorrowedBook(Knjiga book){
-        if(borrowedBooks.size() < maxBookAmount){
-            borrowedBooks.add(book);
-        }
-        else{
-            // books exceeded
+
+        try {
+            if (borrowedBooks.size() < maxBookAmount) {
+                borrowedBooks.add(book);
+            } else {
+                // books exceeded
+                throw new ExceededBorrowedBookLimitException();
+            }
+        } catch (ExceededBorrowedBookLimitException e){
+            System.out.println("Book limit has been exceeded!");
+
         }
     }
 }

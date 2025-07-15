@@ -6,6 +6,7 @@ public class MainKlasa {
     List<Korisnik> libraryUsers;
 
 
+
     public static void main(String[] args) {
 
     }
@@ -20,7 +21,6 @@ public class MainKlasa {
 
     public static List<Knjiga> SearchBookByTitle(String searchInput){
 
-
         List<Knjiga> matchingBooks = null;
 
         for(Knjiga book : libraryBooks){
@@ -34,7 +34,6 @@ public class MainKlasa {
     }
 
     public static List<Knjiga> SearchBookByAuthor(String searchInput){
-
 
         List<Knjiga> matchingBooks = null;
 
@@ -75,7 +74,6 @@ public class MainKlasa {
 
     public static Knjiga ChangeBookAuthor(Knjiga book, String author){
 
-
         if(book == null){
             System.out.println("Error, book cannot be null!");
             return null;
@@ -87,7 +85,6 @@ public class MainKlasa {
 
     public static Knjiga ChangeBookGenre(Knjiga book, String genre){
 
-
         if(book == null){
             System.out.println("Error, book cannot be null!");
             return null;
@@ -96,7 +93,7 @@ public class MainKlasa {
         book.SetGenre(genre);
         return book;
     }
-  
+
     public static void RemoveBookById(long id){
 
         for(Knjiga book : libraryBooks){
@@ -153,4 +150,34 @@ public class MainKlasa {
         return false;
     }
 
+    public static void BorrowBook(Korisnik user, Knjiga book) throws BookNotAvailableException {
+
+        if(user == null){
+            System.out.println("Korisnik ne postoji");
+            return;
+        }
+
+        if(libraryUsers.indexOf(user) < 0){
+            System.out.println("Korisnik nije u sustavu!");
+            return;
+        }
+
+        if(book == null){
+            System.out.println("Knjiga ne postoji!");
+            return;
+        }
+
+        if(libraryBooks.indexOf(book) < 0){
+            System.out.println("Knjiga nije u sustavu!");
+            return;
+        }
+
+        if(book.GetStatus()){
+            book.ChangeAvailability(false);
+            user.AddBorrowedBook(book);
+        }
+        else{
+            throw new BookNotAvailableException();
+        }
+    }
 }
