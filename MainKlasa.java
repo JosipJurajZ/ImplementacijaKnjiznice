@@ -7,6 +7,7 @@ public class MainKlasa {
     private static List<ZaposlenikBiblioteke> libraryEmployees;
 
 
+
     public static void main(String[] args) {
 
     }
@@ -63,6 +64,7 @@ public class MainKlasa {
     }
 
     public static Knjiga ChangeBookTitle(Knjiga book, String title){
+
         if(book == null){
             System.out.println("Error, book cannot be null!");
             return null;
@@ -94,6 +96,7 @@ public class MainKlasa {
     }
 
     public static void RemoveBookById(long id){
+
         for(Knjiga book : libraryBooks){
             if(book.GetId() == id ){
                 libraryBooks.remove(book);
@@ -112,6 +115,7 @@ public class MainKlasa {
     }
 
     public static void RemoveUserById(long id){
+
         for(Korisnik user : libraryUsers){
             if(user.GetId() == id){
                 libraryUsers.remove(user);
@@ -204,4 +208,5 @@ public class MainKlasa {
             book.ChangeAvailability(true);
         }
     }
+
 }

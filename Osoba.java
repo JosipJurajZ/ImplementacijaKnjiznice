@@ -59,6 +59,7 @@ class Korisnik extends Osoba{
     }
 
     public void AddBorrowedBook(Knjiga book){
+
         try {
             if (borrowedBooks.size() < maxBookAmount) {
                 borrowedBooks.add(book);
@@ -78,6 +79,7 @@ class Korisnik extends Osoba{
         else{
             borrowedBooks.remove(book);
             return true;
+
         }
     }
 }
