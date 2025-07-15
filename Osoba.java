@@ -2,7 +2,8 @@ import java.util.List;
 
 public abstract class Osoba {
 
-    private long idTotal;
+    private long idTotal = 0;
+
 
     private String name;
     private String surname;
@@ -44,6 +45,7 @@ class Korisnik extends Osoba{
 
     @Override
     public String ShowDetails(){
+
         String returnString = super.GetNameSurnamme() + " " + super.GetId() + "\n" + maxBookAmount + "\n" + "Books:\n";
         if(borrowedBooks.isEmpty()){
             returnString += "No books borrowed";
@@ -53,7 +55,37 @@ class Korisnik extends Osoba{
                 returnString += book.GetTitle() + " " + book.GetAuthor() + " " + book.GetGenre() + " " + book.GetId() + "\n";
             }
         }
-        
+
         return returnString;
     }
+
+    public void AddBorrowedBook(Knjiga book){
+        if(borrowedBooks.size() < maxBookAmount){
+            borrowedBooks.add(book);
+        }
+        else{
+            // books exceeded
+        }
+    }
+}
+
+class ZaposlenikBiblioteke extends Osoba{
+
+    ZaposlenikBiblioteke(String name, String surname){
+        super(name, surname);
+    }
+
+    public void AddBook(Knjiga book){
+        MainKlasa.AddBook(book);
+    }
+
+    public void RemoveBook(long id){
+        MainKlasa.RemoveBookById(id);
+    }
+
+    @Override
+    public String ShowDetails(){
+        return super.GetNameSurnamme();
+    }
+
 }
