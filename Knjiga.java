@@ -15,13 +15,8 @@ public class Knjiga {
         this.genre = genre;
 
         isAvailable = true;
-
         id = idTotal;
         idTotal++;
-    }
-
-    public void ChangeAvailability(){
-        this.isAvailable = !isAvailable;
     }
 
     public void ChangeAvailability(boolean availability){

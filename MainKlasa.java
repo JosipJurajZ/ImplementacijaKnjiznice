@@ -1,101 +1,68 @@
 import java.util.LinkedList;
-import java.util.List;
 
 public class MainKlasa {
 
     private static LinkedList<Knjiga> libraryBooks;
     private static LinkedList<Osoba> libraryPeople;
-  
+
+    private static BookContext bookContext = new BookContext(new Title());
+    private static PersonContext personContext = new PersonContext(new UserManagment());
 
     public static void main(String[] args) {
 
     }
 
-    public static void AddBook(Knjiga book){
+    public static void addBook(Knjiga book){
         libraryBooks.add(book);
     }
 
-    public static void AddBook(String title, String author, String genre){
-        libraryBooks.add(new Knjiga(title, author, genre));
-    }
+    public static LinkedList<Knjiga> searchForBook(BookCategory category, String searchInput){
 
-    public static List<Knjiga> SearchBookByTitle(String searchInput){
-
-        List<Knjiga> matchingBooks = null;
-
-        for(Knjiga book : libraryBooks){
-
-            if(book.GetTitle().toLowerCase().contains(searchInput.toLowerCase())){
-                matchingBooks.add(book);
-            }
+        switch (category){
+            case TITLE:
+                bookContext.SetStrategy(new Title());
+                break;
+            case AUTHOR:
+                bookContext.SetStrategy(new Author());
+                break;
+            case GENRE:
+                bookContext.SetStrategy(new Genre());
+                break;
+            default:
+                //invalid search
+                return null;
         }
 
-        return matchingBooks;
+        return bookContext.findBook(libraryBooks, searchInput);
     }
 
-    public static List<Knjiga> SearchBookByAuthor(String searchInput){
-
-        List<Knjiga> matchingBooks = null;
-
-        for(Knjiga book : libraryBooks){
-
-            if(book.GetAuthor().toLowerCase().contains(searchInput.toLowerCase())){
-                matchingBooks.add(book);
-            }
-        }
-
-
-        return matchingBooks;
-    }
-
-    public static List<Knjiga> SearchBookByGenre(String searchInput){
-
-        List<Knjiga> matchingBooks = null;
-
-        for(Knjiga book : libraryBooks){
-
-            if(book.GetGenre().toLowerCase().contains(searchInput.toLowerCase())){
-                matchingBooks.add(book);
-            }
-        }
-
-        return matchingBooks;
-    }
-
-    public static Knjiga ChangeBookTitle(Knjiga book, String title){
+    public static void changeBook(Knjiga book, BookCategory category, String newData){
 
         if(book == null){
-            System.out.println("Error, book cannot be null!");
-            return null;
-        }
-        book.SetTitle(title);
-        return book;
-    }
-
-    public static Knjiga ChangeBookAuthor(Knjiga book, String author){
-
-        if(book == null){
-            System.out.println("Error, book cannot be null!");
-            return null;
+            //No book
+            return;
         }
 
-        book.SetAuthor(author);
-        return book;
-    }
-
-    public static Knjiga ChangeBookGenre(Knjiga book, String genre){
-
-        if(book == null){
-            System.out.println("Error, book cannot be null!");
-            return null;
+        switch (category){
+            case TITLE:
+                bookContext.SetStrategy(new Title());
+                break;
+            case AUTHOR:
+                bookContext.SetStrategy(new Author());
+                break;
+            case GENRE:
+                bookContext.SetStrategy(new Genre());
+                break;
+            default:
+                //invalid search
+                return;
         }
 
-        book.SetGenre(genre);
-        return book;
+        bookContext.changeBook(book, newData);
+
     }
 
     public static void RemoveBookById(long id){
-
         for(Knjiga book : libraryBooks){
             if(book.GetId() == id ){
                 libraryBooks.remove(book);
@@ -105,46 +72,45 @@ public class MainKlasa {
         System.out.println("Book with id of \"" + id + "\" not found!");
     }
 
-    public static void AddUser(Korisnik user){
+    public static void addPerson(Osoba person, PersonCategory userType){
 
-        libraryPeople.add(user);
-    }
-
-    public static void AddUser(String name, String surname, int maxBooks){
-        libraryPeople.add(new Korisnik(name, surname, maxBooks));
-    }
-
-    public static void RemoveUserById(long id){
-        for(Osoba user : libraryPeople){
-            if(user.getClass() == Korisnik.class) {
-                if (user.GetId() == id) {
-                    libraryPeople.remove(user);
-                    return;
-                }
-
-            }
-        }
-        System.out.println("User with id of \"" + id + "\"does not exist");
-    }
-
-    public static void AddLibraryEmployee(String name, String surname){
-
-        libraryPeople.add(new ZaposlenikBiblioteke(name, surname));
-
-    }
-
-    public static void RemoveLibraryEmployeeById(long id){
-
-        for(Osoba employee : libraryPeople){
-            if(employee.getClass() == ZaposlenikBiblioteke.class) {
-                if (employee.GetId() == id) {
-                    libraryPeople.remove(employee);
-                    return;
-                }
-            }
+        if(person == null){
+            return;
         }
 
-        System.out.println("Employee with id \"" + id + "\" not found");
+        switch (userType){
+            case KORISNIK:
+                personContext.setStrategy(new UserManagment());
+                break;
+            case ZAPOSLENIK:
+                personContext.setStrategy(new EmployeeManagment());
+                break;
+            default:
+                return;
+        }
+
+        personContext.addPerson(libraryPeople, person);
+    }
+
+    public static void removePerson(long id, PersonCategory userType){
+
+        if(id < 0){
+            return;
+        }
+
+        switch (userType){
+            case KORISNIK:
+                personContext.setStrategy(new UserManagment());
+                break;
+            case ZAPOSLENIK:
+                personContext.setStrategy(new EmployeeManagment());
+                break;
+            default:
+                return;
+        }
+
+        personContext.removePerson(libraryPeople, id);
+
     }
 
     public static boolean CheckBookAvailability(long id){
@@ -167,7 +133,6 @@ public class MainKlasa {
         }
 
         if(!libraryPeople.contains(user)){
-
             System.out.println("Korisnik nije u sustavu!");
             return;
         }
@@ -178,7 +143,6 @@ public class MainKlasa {
         }
 
         if(!libraryBooks.contains(book)){
-
             System.out.println("Knjiga nije u sustavu!");
             return;
         }
@@ -200,7 +164,6 @@ public class MainKlasa {
         }
 
         if(!libraryPeople.contains(user)){
-
             System.out.println("Korisnik nije u sustavu!");
             return;
         }
@@ -211,7 +174,6 @@ public class MainKlasa {
         }
 
         if(!libraryBooks.contains(book)){
-
             System.out.println("Knjiga nije u sustavu!");
             return;
         }
