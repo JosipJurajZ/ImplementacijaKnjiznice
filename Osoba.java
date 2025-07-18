@@ -2,7 +2,7 @@ import java.util.List;
 
 public abstract class Osoba {
 
-    private long idTotal = 0;
+    private static long idTotal = 0;
 
     private String name;
     private String surname;
@@ -59,7 +59,6 @@ class Korisnik extends Osoba{
     }
 
     public void AddBorrowedBook(Knjiga book){
-
         try {
             if (borrowedBooks.size() < maxBookAmount) {
                 borrowedBooks.add(book);
@@ -79,7 +78,6 @@ class Korisnik extends Osoba{
         else{
             borrowedBooks.remove(book);
             return true;
-
         }
     }
 }
@@ -91,11 +89,11 @@ class ZaposlenikBiblioteke extends Osoba{
     }
 
     public void AddBook(Knjiga book){
-        MainKlasa.AddBook(book);
+        MainKlasa.addBook(book);
     }
 
     public void RemoveBook(long id){
-        MainKlasa.RemoveBookById(id);
+        MainKlasa.removeBookById(id);
     }
 
     @Override
