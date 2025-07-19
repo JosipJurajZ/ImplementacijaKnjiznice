@@ -1,7 +1,7 @@
 # Knjiznica
 
-Implementacija sustava za upravljanje knjižnicom
-Kao administrator knjižnice, želim imati funkcionalan sustav za upravljanje knjigama, korisnicima i zaposlenicima kako bih olakšao rad knjižnice i omogućio korisnicima jednostavno posuđivanje knjiga.
+Implementacija sustava za upravljanje knjižnicom <br>
+Kao administrator knjižnice, želim imati funkcionalan sustav za upravljanje knjigama, korisnicima i zaposlenicima kako bih olakšao rad knjižnice i omogućio korisnicima jednostavno posuđivanje knjiga. <br>
 ________________________________________
 Zadatak 1: Upravljanje knjigama
 Kao zaposlenik knjižnice,
